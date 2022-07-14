@@ -1,15 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { conn } from '../../../utils/db';
 
-type Data = {
-    msg: string,
-}
-
-
-
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse
 ) {
     const {
         body,
@@ -33,6 +27,15 @@ export default async function handler(
                 console.log('Error en el POST => ', err)
                 return res.status(404).json({msg: 'Not found'})
             }
+        case "GET":
+                try{
+                    const query = "SELECT * FROM tasks"
+                    const response = await conn.query(query)
+                    return res.status(200).json({data: response.rows})
+                } catch(err){
+                    console.log(err)
+                    return res.status(404).json({msg: 'soy un error'})
+                }
              
         default:
             return res.status(404).json({msg: 'Method Not Allowed'});
