@@ -7,7 +7,6 @@ interface Props{
 }
 
 const Home = ({ tasks }: Props) => {
-  console.log(tasks)
   return (
     <>
       {

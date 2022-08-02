@@ -1,8 +1,9 @@
 export interface Task{
     id?: string,
     title: string,
-    desription: string,
+    description: string,
     priority: number,
     state: string,
-    created_on: string
+    term: string,
+    created_on?: string
 }
