@@ -31,7 +31,7 @@ export default async function handler(
                 try{
                     const query = "SELECT * FROM tasks"
                     const response = await conn.query(query)
-                    return res.status(200).json({data: response.rows})
+                    return res.status(200).json(response.rows)
                 } catch(err){
                     console.log(err)
                     return res.status(404).json({msg: 'soy un error'})

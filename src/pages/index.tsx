@@ -1,11 +1,33 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps } from 'next';
+import { Task } from '../interfaces/Tasks';
 
-const Home: NextPage = () => {
+
+interface Props{
+  tasks: Task[]
+}
+
+const Home = ({ tasks }: Props) => {
+  console.log(tasks)
   return (
-    <div>
-        Holi, estoy asiendo una pajina gueb
-    </div>
+    <>
+      {
+        tasks.length ? 
+        <p>Hay data</p> 
+        : <p>No hay data</p>
+
+      }
+    </>
   )
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const url = "http://localhost:3000/api/tasks"
+  const res = await fetch(url)
+  const tasks = await res.json()
+
+  return{
+    props: { tasks }
+  }
+}
