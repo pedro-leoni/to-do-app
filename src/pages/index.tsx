@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from 'next';
 import { Task } from '../interfaces/Tasks';
-
+import TasksList from '../components/tasks/TasksList';
+import NoData from '../components/NoData/NoData';
 
 interface Props{
   tasks: Task[]
@@ -10,9 +11,9 @@ const Home = ({ tasks }: Props) => {
   return (
     <>
       {
-        tasks.length ? 
-        <p>Hay data</p> 
-        : <p>No hay data</p>
+        tasks.length 
+        ? <TasksList tasks={tasks}/>   
+        : <NoData />
 
       }
     </>
