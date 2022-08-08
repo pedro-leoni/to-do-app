@@ -46,9 +46,37 @@ export default async function handler(
                         state,
                         term
                     } = body
-                    const cmd = 'UPDATE tasks SET title = $1, description = $2, priority = $3, state = $4, term = $5  WHERE id=$6  RETURNING *'
-                    const values = [title,description,priority,state,term,id]
-                    const  resp = await conn.query(cmd, values)
+                    // const cmd = `UPDATE tasks SET title = $1, description = $2, priority = $3, state = $4, term = $5  WHERE id=$6  RETURNING *`
+                    
+                    //              UPDATE tasks SET title = $1, description = $2, priority = $3, state = $4, state = $5 WHERE id=23  RETURNING *
+                    // const values = [title,description,priority,state,term,id]
+                    const values: any = []
+                    const cmdformer: any = []
+                    if( title.length ){
+                        cmdformer.push(`title = $${cmdformer.length + 1}`);
+                        values.push(title)
+                    }
+                    if( description.length ){
+                        cmdformer.push(`description = $${cmdformer.length + 1}`)
+                        values.push(description)
+                    }
+                    if( priority !== 0 ){
+                        cmdformer.push(`priority = $${cmdformer.length + 1}`)
+                        values.push(priority)
+                    }
+                    if( state.length ) {
+                        cmdformer.push(`state = $${cmdformer.length + 1}`)
+                        values.push(state)
+                    }
+                    if( term.length ){
+                        cmdformer.push(`term = $${cmdformer.length + 1}`)
+                        values.push(term)
+                    }
+                    values.push(id)
+                    const cm = cmdformer.join(', ')
+                    const cmd = `UPDATE tasks SET ${cm} WHERE id=$${values.length}  RETURNING *`
+                    console.log(cmd)
+                    const resp = await conn.query(cmd, values)
                     if(resp.rows.length){
                         return res.status(200).json({msg: `Task ${resp.rows[0].id} updated`})
                     } else {
