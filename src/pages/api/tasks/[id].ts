@@ -75,7 +75,6 @@ export default async function handler(
                     values.push(id)
                     const cm = cmdformer.join(', ')
                     const cmd = `UPDATE tasks SET ${cm} WHERE id=$${values.length}  RETURNING *`
-                    console.log(cmd)
                     const resp = await conn.query(cmd, values)
                     if(resp.rows.length){
                         return res.status(200).json({msg: `Task ${resp.rows[0].id} updated`})

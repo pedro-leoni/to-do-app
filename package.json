@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.2.4",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@icons-pack/react-simple-icons": "^5.4.0",
     "@types/pg": "^8.6.5",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",

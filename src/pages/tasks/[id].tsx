@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import type { GetStaticPaths, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import { Task } from "../../interfaces/Tasks";
 import { Spinner } from "@chakra-ui/react";
 import {
@@ -26,7 +26,7 @@ interface Props {
 type ChangeInputHandler = ChangeEvent<
   HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
 >;
-type SubmitForm = FormEvent<HTMLFormElement>;
+type SubmitForm = MouseEvent<HTMLElement>;
 
 const initialState = {
   title: "",
@@ -41,7 +41,7 @@ export default function NewPage() {
   const [info, setInfo] = useState<Task>(initialState);
   const [edit, setEdit] = useState<Boolean>(false);
   const [inputs, setInputs] = useState<Task>(initialState);
-  const [putSwitch, setPutSwitch] = useState<Boolean>(false)
+  const [putSwitch, setPutSwitch] = useState<Boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -63,55 +63,54 @@ export default function NewPage() {
   const putTask = () => {
     const { id } = router.query;
     const url = `http://localhost:3000/api/tasks/${id}`;
-    setLoading(true)
+    setLoading(true);
     fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(inputs),
-    })
-      .then((res) => {
-        if (res.status >= 400) {
-          setPutSwitch(!putSwitch)
-          return alert("hubo un problema, intentalo de nuevo");
-        } else {
-          return res.json().then((json) => setInfo(json.data)).then(() => alert("Todo ok"));;
-        }
-      })
-      setPutSwitch(!putSwitch)
-      setLoading(false)
+    }).then((res) => {
+      if (res.status >= 400) {
+        setPutSwitch(!putSwitch);
+        return alert("hubo un problema, intentalo de nuevo");
+      } else {
+        return res
+          .json()
+          .then((json) => setInfo(json.data))
+          .then(() => alert("Todo ok"));
+      }
+    });
+    setPutSwitch(!putSwitch);
+    setLoading(false);
   };
   const deleteTask = () => {
     const { id } = router.query;
-    const url = `http://localhost:3000/api/tasks/${id}`
-    setLoading(true)
+    const url = `http://localhost:3000/api/tasks/${id}`;
+    setLoading(true);
     fetch(url, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-      }
-    })
-    .then((res)=>{
-      console.log(res)
-      alert('Tarea eliminada')
-      router.push('/')
-    })
-  }
+      },
+    }).then((res) => {
+      alert("Tarea eliminada");
+      router.push("/");
+    });
+  };
   const handleDelete = () => {
-    if (confirm('estas seguro?')){
-      deleteTask()
+    if (confirm("estas seguro?")) {
+      deleteTask();
     }
-  }
+  };
 
   const handleSubmit = (e: SubmitForm) => {
     e.preventDefault();
-    console.log("Inputs cuando submiteo => ", inputs);
     if (inputs === initialState) {
       alert("no hay cambios");
     } else {
       putTask();
-      setInputs(initialState)
+      setInputs(initialState);
     }
   };
 
@@ -121,44 +120,73 @@ export default function NewPage() {
       borderRadius="lg"
       minHeight="30vh"
       height="auto"
-      p={11}
+      p={5}
       mt={20}
-      width="40vw"
+      width="25vw"
       display="flex"
       flexDirection="column"
       alignItems="center"
-      justifyContent="space-around"
+      justifyContent="space-evenly"
       position="absolute"
-      sx={{ left: "30%" }}
+      sx={{ left: "37%" }}
+      backgroundColor="rgba(255, 255, 255, 0.674)"
+      boxShadow="31px 33px 13px 8px rgba(0,0,0,0.08)"
     >
-      <Box display="flex" mb={9} mt={3}>
+      <Box display="flex" flexDirection='column-reverse' alignContent='center' mb={9} mt={9}>
         {edit ? (
           <Input
             name="title"
             placeholder={info?.title}
             onChange={handleChange}
+            borderColor="black"
           />
         ) : (
-          <Heading>{info?.title}</Heading>
+          <Text fontSize="3xl">{info?.title}</Text>
         )}
-        <Box display="flex" alignSelf="flex-end" ml="300px">
+        <Box display="flex" alignSelf="flex-end" position='absolute' sx={{top:3, right: 3}} >
           <Button
+            size="sm"
             mr={2}
-            onClick={edit ? () => {setEdit(false) ; setInputs(initialState)} : () => router.push("/")}
+            onClick={
+              edit
+                ? () => {
+                    setEdit(false);
+                    setInputs(initialState);
+                  }
+                : () => router.push("/")
+            }
+            variant="outline"
+            borderColor="black"
           >
             <ArrowBackIcon />
           </Button>
-          <Button mr={2} onClick={() => setEdit(true)}>
+          <Button
+            size="sm"
+            mr={2}
+            onClick={() => setEdit(true)}
+            variant="outline"
+            borderColor="black"
+          >
             <EditIcon />
           </Button>
-          <Button onClick={handleDelete}>
-            <DeleteIcon/>
+          <Button
+            size="sm"
+            onClick={handleDelete}
+            variant="outline"
+            borderColor="black"
+          >
+            <DeleteIcon />
           </Button>
         </Box>
       </Box>
-      <Box borderWidth="1px" borderRadius="lg" width="70%" p={2} mb={9}>
+      <Box borderWidth="1px" borderColor="grey" borderRadius="lg" p={2} mb={9}>
         {loading && <Spinner />}
-        <Box display="flex" flexDir="column" justifyContent="space-around">
+        <Box
+          display="flex"
+          width="20vw"
+          flexDir="column"
+          justifyContent="space-around"
+        >
           {edit ? (
             <>
               <Textarea
@@ -166,19 +194,23 @@ export default function NewPage() {
                 height="auto"
                 placeholder={info?.description}
                 onChange={handleChange}
+                borderColor="black"
               />
               <Box display="flex" justifyContent="space-around">
                 <Input
                   name="term"
                   placeholder={new Date(info?.term).toLocaleDateString()}
                   onChange={handleChange}
+                  borderColor="black"
                 />
-                <Select name="priority" onChange={handleChange}>
+                <Select name="priority" onChange={handleChange} borderColor="black">
+                  <option value={info?.priority}>Prioridad</option>
                   <option value={1}>Urgente</option>
                   <option value={2}>Media</option>
                   <option value={3}>Puede esperar</option>
                 </Select>
-                <Select name="state" onChange={handleChange}>
+                <Select name="state" onChange={handleChange} borderColor="black">
+                  <option value={info?.state}>Estado</option>
                   <option value="ready"> Lista </option>
                   <option value="process"> En Proceso </option>
                   <option value="awaiting"> Por empezar </option>
@@ -187,15 +219,22 @@ export default function NewPage() {
             </>
           ) : (
             <>
-              <Text fontSize="2xl">{info?.description}</Text>
-              <Box display="flex" justifyContent="space-around">
+              <Text fontSize="1.5rem">{info?.description}</Text>
+
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-around"
+              >
                 <Text>
                   Tiempo hasta: {new Date(info?.term).toLocaleDateString()}
                 </Text>
-                {info?.priority === 1 && <Text>!</Text>}
-                {info?.priority === 2 && <Text>!!</Text>}
-                {info?.priority === 3 && <Text>!!!</Text>}
-                Estado: {info?.state}
+                <Text>
+                  Prioridad: {info?.priority}
+                  <span style={{ marginLeft: "10px" }}>
+                    Estado: {info?.state}
+                  </span>
+                </Text>
               </Box>
             </>
           )}
@@ -207,11 +246,21 @@ export default function NewPage() {
             <Button
               margin={4}
               rightIcon={<CloseIcon />}
-              onClick={() =>{ setEdit(false); setInputs(initialState)}}
+              onClick={() => {
+                setEdit(false);
+                setInputs(initialState);
+              }}
+              variant="outline"
+              borderColor="black"
             >
               Cancelar
             </Button>
-            <Button rightIcon={<CheckIcon />} onClick={handleSubmit}>
+            <Button
+              variant="outline"
+              borderColor="black"
+              rightIcon={<CheckIcon />}
+              onClick={handleSubmit}
+            >
               Listo
             </Button>
           </Box>

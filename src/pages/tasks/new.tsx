@@ -65,48 +65,84 @@ const NewPage = (): JSX.Element => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Box display='flex' flexDirection='column' maxW="sm" borderWidth="1px" borderRadius="lg" padding={3}>
-        <FormControl isRequired>
-          <FormLabel> Title </FormLabel>
-          <Input name="title" onChange={handleChange} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel> Description </FormLabel>
-          <Textarea name="description" onChange={handleChange} />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel> Priority </FormLabel>
-          <Select
-            placeholder="Priority level from 1 to 3"
-            name="priority"
-            onChange={handleChange}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <Box
+        display="flex"
+        flexDirection="column"
+        maxW="sm"
+        borderWidth="1px"
+        borderRadius="lg"
+        marginTop="15vh"
+        padding={3}
+        width="25vw"
+        backgroundColor="rgba(255, 255, 255, 0.674)"
+        boxShadow='31px 33px 13px 8px rgba(0,0,0,0.08)'
+      >
+        <form onSubmit={handleSubmit}>
+          <FormControl isRequired>
+            <FormLabel> Title </FormLabel>
+            <Input name="title" onChange={handleChange} borderColor='black'/>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel> Description </FormLabel>
+            <Textarea name="description" onChange={handleChange} borderColor='black'/>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel> Priority </FormLabel>
+            <Select
+              borderColor='black'
+              placeholder="Priority level from 1 to 3"
+              name="priority"
+              onChange={handleChange}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+            </Select>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel> State </FormLabel>
+            <RadioGroup name="state" onChange={handleRadioChange} ml={2}>
+              <Stack direction="row">
+                <Radio value="ready" borderColor='grey'>Lista</Radio>
+                <Radio value="process" borderColor='grey'>En Proceso</Radio>
+                <Radio value="awaiting" borderColor='grey'>Por empezar</Radio>
+              </Stack>
+            </RadioGroup>
+          </FormControl>
+          <FormControl isRequired>
+            <FormLabel> Term </FormLabel>
+            <Input
+              placeholder="Select Date and Time"
+              size="md"
+              type="date"
+              name="term"
+              onChange={handleChange}
+              borderColor='black'
+            />
+          </FormControl>
+          <Button
+            type="submit"
+            
+            marginLeft='70%'
+            leftIcon={<AddIcon />}
+            mt={3}
+            variant='outline'
+            borderColor='black'
           >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-          </Select>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel> State </FormLabel>
-          <RadioGroup name="state" onChange={handleRadioChange} ml={2}>
-            <Stack direction="row">
-              <Radio value="ready">Lista</Radio>
-              <Radio value="process">En Proceso</Radio>
-              <Radio value="awaiting">Por empezar</Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel> Term </FormLabel>
-          <Input placeholder="dd/mm/yyyy" name="term" onChange={handleChange} />
-        </FormControl>
-        <Button type="submit" variant="solid" alignSelf='flex-end' leftIcon={<AddIcon />} mt={3}>
-          {" "}
-          Create{" "}
-        </Button>
+            {" "}
+            Create{" "}
+          </Button>
+        </form>
       </Box>
-    </form>
+    </div>
   );
 };
 

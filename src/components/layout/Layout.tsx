@@ -1,10 +1,23 @@
+import { Container } from '@chakra-ui/react';
 import React from 'react'
+import NavBar from './NavBar/NavBar'
+import style from './Layout.module.css'
 
-type Props = {}
 
-function Layout({}: Props) {
+
+function Layout({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}) {
   return (
-    <div>Layout</div>
+    <div>
+      <NavBar/>
+      <div className={style.container}>
+        {children}
+      </div>
+
+    </div>
   )
 }
 

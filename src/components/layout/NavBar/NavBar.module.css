@@ -1,0 +1,22 @@
+.navContent{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.674);
+    align-items: center;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+    position: fixed;
+    top: 0;
+}
+
+.navContent a{
+    font-size: large;
+    font-weight: 500;
+    margin: 20px;
+}
+
+.navContent a:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
