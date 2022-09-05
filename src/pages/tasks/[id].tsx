@@ -47,7 +47,12 @@ export default function NewPage() {
   useEffect(() => {
     const { id } = router.query;
     const url = `/api/tasks/${id}`;
-    fetch(url)
+    fetch(
+      url,{      
+      headers: {
+      "Content-Type": "application/json",
+      }}
+    )
       .then((res) => res.json())
       .then((json) => setInfo(json.data));
     setLoading(false);
@@ -274,7 +279,12 @@ export const getInitialProps: any = async (context: any) => {
   const id = context.params;
   console.log(context)
   const url = `/api/tasks/${id}`;
-  const res = await fetch(url);
+  const res = await fetch(
+    url, 
+    {headers: {
+    "Content-Type": "application/json",
+    }}
+  );
   const tasks = await res.json();
 
   return {
