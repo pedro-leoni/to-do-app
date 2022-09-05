@@ -12,5 +12,5 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const response = await conn.query("SELECT NOW()")
-  res.status(200).json({ msg: 'La db funciona correctamente', timestamp: response.rows[0].now })
+  res.status(200).send({ msg: 'La db funciona correctamente', timestamp: response.rows[0].now })
 }

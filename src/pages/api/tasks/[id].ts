@@ -13,13 +13,13 @@ export default async function handler(
             const values = [id]
             const response = await conn.query(cmd, values)
                 if(response.rows.length){
-                   return res.status(200).json({ data: response.rows[0]})
+                   return res.status(200).send({ data: response.rows[0]})
                 } else {
-                   return res.status(400).json({ msg: 'Not exist'})
+                   return res.status(400).send({ msg: 'Not exist'})
                 }
             } catch(err){
                 console.log(err)
-                return res.status(404).json({msg: 'Not Found'})
+                return res.status(404).send({msg: 'Not Found'})
             }
 
         case "DELETE":
@@ -28,13 +28,13 @@ export default async function handler(
                     const value = [id]
                     const response = await conn.query(cmd,value)
                     if(response.rows.length){
-                        return res.status(200).json({msg: `Task id ${response.rows[0].id} Deleted`})
+                        return res.status(200).send({msg: `Task id ${response.rows[0].id} Deleted`})
                     } else {
-                        return res.status(400).json({msg: 'Not exist'})
+                        return res.status(400).send({msg: 'Not exist'})
                     }
                 } catch(err) {
                     console.log(err)
-                    return res.status(404).json({msg: 'Insert correct id type, only integers'})
+                    return res.status(404).send({msg: 'Insert correct id type, only integers'})
                 }
             
         case "PUT":
@@ -77,15 +77,15 @@ export default async function handler(
                     const cmd = `UPDATE tasks SET ${cm} WHERE id=$${values.length}  RETURNING *`
                     const resp = await conn.query(cmd, values)
                     if(resp.rows.length){
-                        return res.status(200).json({msg: `Task ${resp.rows[0].id} updated`})
+                        return res.status(200).send({msg: `Task ${resp.rows[0].id} updated`})
                     } else {
-                        return res.status(400).json({msg: 'not found'})
+                        return res.status(400).send({msg: 'not found'})
                     }
                 } catch(err){
                     console.log('catch del put \nError: ',err)
-                    return res.status(404).json({msg: `catch del put \nError: ${err}`})
+                    return res.status(404).send({msg: `catch del put \nError: ${err}`})
                 }
         default:
-            return res.status(404).json({msg: 'Method not allowed'})
+            return res.status(404).send({msg: 'Method not allowed'})
     }
 }

@@ -18,12 +18,12 @@ export default async function handler (
                 created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
             );`
             await conn.query(query)
-            return res.status(200).json({
+            return res.status(200).send({
                 message: "La tabla fue creada exitosamente"
             })
 
         } catch(err:any) {
-            res.json({
+            res.send({
                 status: 500,
                 message: 'Error en SETUP DATABASE',
                 err: err.message
@@ -31,6 +31,6 @@ export default async function handler (
         }
 
     } else {
-        res.status(404).json({msg: 'Method not allowed'})
+        res.status(404).send({msg: 'Method not allowed'})
     }
 }
