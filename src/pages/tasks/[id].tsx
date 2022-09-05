@@ -78,7 +78,7 @@ export default function NewPage() {
         return res
           .json()
           .then((json) => setInfo(json.data))
-          .then(() => alert("Todo ok"));
+          .then(() => alert("Editado con exito"));
       }
     });
     setPutSwitch(!putSwitch);

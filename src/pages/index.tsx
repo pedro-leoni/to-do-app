@@ -3,7 +3,7 @@ import { Task } from '../interfaces/Tasks';
 import TasksList from '../components/tasks/TasksList';
 import NoData from '../components/NoData/NoData';
 import { Heading } from '@chakra-ui/react';
-import Layout from '../components/layout/Layout';
+
 
 interface Props{
   tasks: Task[]

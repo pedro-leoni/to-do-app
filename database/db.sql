@@ -1,3 +1,4 @@
+-- Escribir esta sentencia en la sql shell, creara la tabla que necesitamos en caso de que no exista.
 CREATE TABLE IF NOT EXISTS tasks(
     id SERIAL PRIMARY KEY,
     title VARCHAR(100) UNIQUE NOT NULL,

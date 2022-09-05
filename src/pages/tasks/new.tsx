@@ -7,12 +7,14 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Spinner,
   Stack,
   Textarea,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Task } from "../../interfaces/Tasks";
+import { useRouter } from 'next/router';
 
 const initialState = {
   title: "",
@@ -29,12 +31,17 @@ type SubmitForm = FormEvent<HTMLFormElement>;
 
 const NewPage = (): JSX.Element => {
   const [inputs, setInputs] = useState<Task>(initialState);
+  const [loading, setLoading] = useState<Boolean>(false);
+  const router = useRouter();
+
+
   const handleChange = ({ target: { name, value } }: ChangeInputHandler) => {
     setInputs({
       ...inputs,
       [name]: value,
     });
   };
+
   const handleRadioChange = (e: string) => {
     setInputs({
       ...inputs,
@@ -46,13 +53,13 @@ const NewPage = (): JSX.Element => {
     e.preventDefault();
     try {
       postTask(inputs);
-      alert("todo bien, chequear db");
     } catch (err) {
       console.log(err);
     }
   };
 
   const postTask = async (inputs: Task) => {
+    setLoading(true)
     const url = "/api/tasks";
     const config = {
       method: "POST",
@@ -62,6 +69,9 @@ const NewPage = (): JSX.Element => {
       },
     };
     await fetch(url, config);
+    setLoading(false);
+    alert('Creado con exito');
+    router.push('/')
   };
 
   return (
@@ -85,7 +95,11 @@ const NewPage = (): JSX.Element => {
         backgroundColor="rgba(255, 255, 255, 0.674)"
         boxShadow='31px 33px 13px 8px rgba(0,0,0,0.08)'
       >
-        <form onSubmit={handleSubmit}>
+        {
+          loading ? 
+          <Spinner/>
+          :
+          <form onSubmit={handleSubmit}>
           <FormControl isRequired>
             <FormLabel> Title </FormLabel>
             <Input name="title" onChange={handleChange} borderColor='black'/>
@@ -141,6 +155,7 @@ const NewPage = (): JSX.Element => {
             Create{" "}
           </Button>
         </form>
+        }
       </Box>
     </div>
   );
