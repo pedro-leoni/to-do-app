@@ -53,7 +53,7 @@ const NewPage = (): JSX.Element => {
   };
 
   const postTask = async (inputs: Task) => {
-    const url = "http://localhost:3000/api/tasks";
+    const url = "/api/tasks";
     const config = {
       method: "POST",
       body: JSON.stringify(inputs),

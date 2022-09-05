@@ -10,6 +10,7 @@ interface Props{
 }
 
 const Home = ({ tasks }: Props) => {
+
   return (
     <>
       <Heading textAlign='center' p={20} pt='12vh'> Lista de tareas </Heading>
@@ -26,7 +27,7 @@ const Home = ({ tasks }: Props) => {
 export default Home
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const url = "http://localhost:3000/api/tasks"
+  const url = `${process.env.API_URL}/api/tasks`
   const res = await fetch(url)
   const tasks = await res.json()
 

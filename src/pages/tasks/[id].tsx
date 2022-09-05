@@ -46,7 +46,7 @@ export default function NewPage() {
 
   useEffect(() => {
     const { id } = router.query;
-    const url = `http://localhost:3000/api/tasks/${id}`;
+    const url = `/api/tasks/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((json) => setInfo(json.data));
@@ -62,7 +62,7 @@ export default function NewPage() {
   };
   const putTask = () => {
     const { id } = router.query;
-    const url = `http://localhost:3000/api/tasks/${id}`;
+    const url = `/api/tasks/${id}`;
     setLoading(true);
     fetch(url, {
       method: "PUT",
@@ -86,7 +86,7 @@ export default function NewPage() {
   };
   const deleteTask = () => {
     const { id } = router.query;
-    const url = `http://localhost:3000/api/tasks/${id}`;
+    const url = `/api/tasks/${id}`;
     setLoading(true);
     fetch(url, {
       method: "DELETE",
@@ -270,9 +270,10 @@ export default function NewPage() {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getInitialProps: any = async (context: any) => {
   const id = context.params;
-  const url = `http://localhost:3000/api/tasks/${id}`;
+  console.log(context)
+  const url = `/api/tasks/${id}`;
   const res = await fetch(url);
   const tasks = await res.json();
 

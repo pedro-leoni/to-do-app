@@ -13,7 +13,7 @@ type SubmitForm = FormEvent<HTMLFormElement>;
 function TasksList({ tasks = [] }: Props) {
   const router = useRouter();
   const deleteTask = (id) => {
-    const url = `http://localhost:3000/api/tasks/${id}`;
+    const url = `/api/tasks/${id}`;
     fetch(url, {
       method: "DELETE",
       headers: {
