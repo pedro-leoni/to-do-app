@@ -22,11 +22,15 @@ export default async function handler (
                 message: "La tabla fue creada exitosamente"
             })
 
-        } catch(err:any) {
+        } catch(err) {
+            let errM = 'No message error'
+            if(err instanceof Error){
+                errM = err.message
+            }
             res.send({
                 status: 500,
                 message: 'Error en SETUP DATABASE',
-                err: err.message
+                err: errM
             })  
         }
 

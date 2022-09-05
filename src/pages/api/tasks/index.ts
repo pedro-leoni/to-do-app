@@ -24,7 +24,7 @@ export default async function handler(
                 const response = await conn.query(query, values)
                 return res.status(200).send({msg: `Task ${response.rows[0].id} created`});
             } catch(err) {
-                console.log('Error en el POST => ', err)
+                // console.log('Error en el POST => ', err)
                 return res.status(404).send({msg: 'Not found'})
             }
         case "GET":
@@ -33,7 +33,7 @@ export default async function handler(
                     const response = await conn.query(query)
                     return res.status(200).send(response.rows)
                 } catch(err){
-                    console.log(err)
+                    // console.log(err)
                     return res.status(404).send({msg: 'soy un error'})
                 }
              

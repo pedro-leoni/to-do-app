@@ -18,7 +18,7 @@ export default async function handler(
                    return res.status(400).send({ msg: 'Not exist'})
                 }
             } catch(err){
-                console.log(err)
+                // console.log(err)
                 return res.status(404).send({msg: 'Not Found'})
             }
 
@@ -33,7 +33,7 @@ export default async function handler(
                         return res.status(400).send({msg: 'Not exist'})
                     }
                 } catch(err) {
-                    console.log(err)
+                    // console.log(err)
                     return res.status(404).send({msg: 'Insert correct id type, only integers'})
                 }
             
@@ -46,12 +46,8 @@ export default async function handler(
                         state,
                         term
                     } = body
-                    // const cmd = `UPDATE tasks SET title = $1, description = $2, priority = $3, state = $4, term = $5  WHERE id=$6  RETURNING *`
-                    
-                    //              UPDATE tasks SET title = $1, description = $2, priority = $3, state = $4, state = $5 WHERE id=23  RETURNING *
-                    // const values = [title,description,priority,state,term,id]
-                    const values: any = []
-                    const cmdformer: any = []
+                    const values: Array<string | string[] | undefined> = []
+                    const cmdformer: Array<string> = []
                     if( title.length ){
                         cmdformer.push(`title = $${cmdformer.length + 1}`);
                         values.push(title)
@@ -82,7 +78,7 @@ export default async function handler(
                         return res.status(400).send({msg: 'not found'})
                     }
                 } catch(err){
-                    console.log('catch del put \nError: ',err)
+                    // console.log('catch del put \nError: ',err)
                     return res.status(404).send({msg: `catch del put \nError: ${err}`})
                 }
         default:

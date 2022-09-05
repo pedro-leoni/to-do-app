@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Task } from "../../interfaces/Tasks";
 import { Box, Button, Link, SimpleGrid, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -8,11 +7,11 @@ import { FormEvent } from "react";
 interface Props {
   tasks: Task[];
 }
-type SubmitForm = FormEvent<HTMLFormElement>;
+
 
 function TasksList({ tasks = [] }: Props) {
   const router = useRouter();
-  const deleteTask = (id) => {
+  const deleteTask = (id: string | undefined | string[]) => {
     const url = `/api/tasks/${id}`;
     fetch(url, {
       method: "DELETE",
@@ -24,7 +23,7 @@ function TasksList({ tasks = [] }: Props) {
       router.push("/");
     });
   };
-  const handleDelete = (e, id) => {
+  const handleDelete = (e: React.MouseEvent<HTMLElement>, id: string | undefined | string[]) => {
     e.preventDefault();
     if (confirm("Eliminar?")) {
       deleteTask(id);

@@ -275,10 +275,9 @@ export default function NewPage() {
   );
 }
 
-export const getInitialProps: any = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params;
-  console.log(context)
-  const url = `/api/tasks/${id}`;
+  const url = `${process.env.API_URL}/api/tasks/${id}`;
   const res = await fetch(
     url, 
     {headers: {

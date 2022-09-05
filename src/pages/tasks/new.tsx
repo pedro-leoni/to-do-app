@@ -54,7 +54,8 @@ const NewPage = (): JSX.Element => {
     try {
       postTask(inputs);
     } catch (err) {
-      console.log(err);
+      alert('Se produjo un error')
+      // console.log(err);
     }
   };
 

@@ -22,7 +22,7 @@ function About({open, setOpen}:Props) {
           <ModalCloseButton onClick={handleClose}/>
           <ModalBody display='flex' flexDirection='column'>
             <Text fontSize='2xl'>
-                Pedro Leoni - Software Engineer
+                Pedro Leoni - Fullstack Developer
             </Text>
             <a style={{marginTop: '15px', textDecoration: 'underline'}} href='https://github.com/pedro-leoni/to-do-app' target='#blank'>
                 Repositorio del proyecto
