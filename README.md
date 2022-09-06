@@ -12,7 +12,11 @@ LINK DEL DEPLOY:
 https://to-do-app-mu-five.vercel.app/
 
 ## Rutas del front
+
 / -> renderiza taskslist || nodata
+
 /tasks/new -> nueva task
+
 /tasks/[id] -> vista especifica de una task
+
 /tasks/edit/[id] -> vista de edicion
